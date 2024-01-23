@@ -35,6 +35,8 @@
 #else
 #	include <ws2tcpip.h>
 #	include <mswsock.h>
+#   undef SOL_IP
+#   undef SOL_IPV6
 #endif
 #include <glib.h>
 #include <check.h>

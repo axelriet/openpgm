@@ -29,6 +29,10 @@
 #endif
 #include <impl/framework.h>
 
+#ifdef _WIN32
+#undef SOL_IP
+#undef SOL_IPV6
+#endif
 
 /* FreeBSD */
 #if !defined( IPV6_ADD_MEMBERSHIP )
