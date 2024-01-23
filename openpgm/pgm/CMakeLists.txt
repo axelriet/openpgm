@@ -27,7 +27,7 @@ include (${CMAKE_SOURCE_DIR}/cmake/Modules/TestOpenPGMVersion.cmake)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING
-      "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+      "Choose the type of build, options are: None Debug Release."
       FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
@@ -55,8 +55,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	)
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-# Enables the use of Intel Advanced Vector Extensions 2 instructions.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:AVX2")
+# Enables the use of Intel Advanced Vector Extensions instructions.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:AVX")
 
 # Parallel make.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
@@ -72,51 +72,51 @@ set(CMAKE_MODULE_LINKER_FLAGS_RELEASE "${CMAKE_MODULE_LINKER_FLAGS_RELEASE} /LTC
 # source files
 
 set(c99-sources
-	cpu.c
-        thread.c
-        mem.c
-        string.c
-        list.c
-        slist
-        queue.c
-        hashtable.c
-        messages.c
-        error.c
-        math.c
-        packet_parse.c
-        packet_test.c
-        sockaddr.c
-        time.c
-        if.c
-	inet_lnaof.c
-        getifaddrs.c
-	get_nprocs.c
-        getnetbyname.c
-        getnodeaddr.c
-        getprotobyname.c
-        indextoaddr.c
-        indextoname.c
-        nametoindex.c
-        inet_network.c
-        md5.c
-        rand.c
-        gsi.c
-        tsi.c
-        txw.c
-        rxw.c
-        skbuff.c
-        socket.c
-        source.c
-        receiver.c
-        recv.c
-        engine.c
-        timer.c
-        net.c
-        rate_control.c
-        checksum.c
-        reed_solomon.c
-        wsastrerror.c
-        histogram.c
+    checksum.c
+    cpu.c
+    engine.c
+    error.c
+    get_nprocs.c
+    getifaddrs.c
+    getnetbyname.c
+    getnodeaddr.c
+    getprotobyname.c
+    gsi.c
+    hashtable.c
+    histogram.c
+    if.c
+    indextoaddr.c
+    indextoname.c
+    inet_lnaof.c
+    inet_network.c
+    list.c
+    math.c
+    md5.c
+    mem.c
+    messages.c
+    nametoindex.c
+    net.c
+    packet_parse.c
+    packet_test.c
+    queue.c
+    rand.c
+    rate_control.c
+    receiver.c
+    recv.c
+    reed_solomon.c
+    rxw.c
+    skbuff.c
+    slist
+    sockaddr.c
+    socket.c
+    source.c
+    string.c
+    thread.c
+    time.c
+    timer.c
+    tsi.c
+    txw.c
+    wsastrerror.c
 )
 
 include_directories(
@@ -177,8 +177,8 @@ set(sources
 
 add_library(libpgm STATIC ${sources})
 set_target_properties(libpgm PROPERTIES
-	RELEASE_POSTFIX "${_pgm_COMPILER}-mt-${OPENPGM_VERSION_MAJOR}_${OPENPGM_VERSION_MINOR}_${OPENPGM_VERSION_MICRO}"
-	DEBUG_POSTFIX "${_pgm_COMPILER}-mt-gd-${OPENPGM_VERSION_MAJOR}_${OPENPGM_VERSION_MINOR}_${OPENPGM_VERSION_MICRO}")
+	RELEASE_POSTFIX ""
+	DEBUG_POSTFIX "")
 
 add_executable(purinsend examples/purinsend.c examples/getopt.c examples/getopt_long.c)
 target_link_libraries(purinsend libpgm)
@@ -225,7 +225,7 @@ install (TARGETS libpgm DESTINATION lib)
 install (TARGETS purinsend purinrecv daytime shortcakerecv DESTINATION bin)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	install (
-		FILES ${CMAKE_BINARY_DIR}/lib/libpgm${_pgm_COMPILER}-mt-gd-${OPENPGM_VERSION_MAJOR}_${OPENPGM_VERSION_MINOR}_${OPENPGM_VERSION_MICRO}.pdb
+		FILES ${CMAKE_BINARY_DIR}/lib/libpgm.pdb
 		DESTINATION lib
 	)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")

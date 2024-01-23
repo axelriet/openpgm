@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <string.h>
 #ifdef _WIN32
-#	define strcasecmp	stricmp
+#define strcasecmp _stricmp
 #endif
 #include <impl/framework.h>
 #include <impl/mem.h>

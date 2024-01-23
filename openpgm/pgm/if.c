@@ -45,7 +45,7 @@
 #include <pgm/if.h>
 
 
-#define IF_DEBUG
+//#define IF_DEBUG
 
 /* temporary structure to contain interface name whilst address family
  * has not been resolved.

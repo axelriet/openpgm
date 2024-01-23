@@ -29,7 +29,7 @@
 #	define PRIzd		"ld"
 #	define PRIzi		"li"
 #	define PRIzo		"lo"
-#	define PRIzu		"lu"
+#	define PRIzu		"zu"
 #	define PRIzx		"lx"
 #	define PRIzX		"lX"
 #else
