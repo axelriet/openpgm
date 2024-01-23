@@ -231,7 +231,7 @@ pgm_parse_raw (
 
 /* advance DATA pointer to PGM packet */
 	skb->data	= skb->pgm_header;
-	skb->len       -= ip_header_length;
+	skb->len       -= (uint16_t) ip_header_length;
 	return pgm_parse (skb, error);
 }
 

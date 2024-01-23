@@ -1370,8 +1370,8 @@ _pgm_rxw_incoming_read (
 		}
 	} while (*pmsg <= msg_end && !_pgm_rxw_incoming_is_empty (window));
 
-	window->bytes_delivered += bytes_read;
-	window->msgs_delivered  += data_read;
+	window->bytes_delivered += (uint32_t) bytes_read;
+	window->msgs_delivered  += (uint32_t) data_read;
 	return data_read > 0 ? bytes_read : -1;
 }
 

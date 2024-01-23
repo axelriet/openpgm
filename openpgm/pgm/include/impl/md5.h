@@ -47,7 +47,7 @@ struct pgm_md5_t
 	uint32_t	D;
 
 	uint32_t	total[2];
-	uint32_t	buflen;
+    size_t		buflen;
 	char		buffer[128]
 #if (__GNUC__ > 2) || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
 					__attribute__ ((__aligned__ (__alignof__ (uint32_t))))

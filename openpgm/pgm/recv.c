@@ -163,6 +163,9 @@ recvskb (
 	    AF_INET6 == pgm_sockaddr_family (src_addr))
 	{
 		struct pgm_cmsghdr* cmsg;
+#ifdef _MSC_VER
+#pragma warning(disable: 4116) // unnamed type definition
+#endif
 		for (cmsg = PGM_CMSG_FIRSTHDR(&msg);
 		     cmsg != NULL;
 		     cmsg = PGM_CMSG_NXTHDR(&msg, cmsg))
@@ -233,6 +236,9 @@ recvskb (
 			}
 		}
 	}
+#ifdef _MSC_VER
+#pragma warning(default : 4116)
+#endif
 	return len;
 }
 

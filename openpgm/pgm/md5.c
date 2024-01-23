@@ -108,7 +108,7 @@ _pgm_md5_process_block (
 /* First increment the byte count.  RFC 1321 specifies the possible
    length of the file up to 2^64 bits.  Here we only compute the
    number of bytes.  Do a double word increment.  */
-	ctx->total[0] += len;
+	ctx->total[0] += (uint32_t) len;
 	if (ctx->total[0] < len)
 		++ctx->total[1];
 
@@ -349,11 +349,11 @@ pgm_md5_finish_ctx (
 	pgm_assert (NULL != resbuf);
 
 /* Take yet unprocessed bytes into account.  */
-	const uint32_t bytes = ctx->buflen;
+	const size_t bytes = ctx->buflen;
 	size_t pad;
 
 /* Now count remaining bytes.  */
-	ctx->total[0] += bytes;
+	ctx->total[0] += (uint32_t) bytes;
 	if (ctx->total[0] < bytes)
 		++ctx->total[1];
 

@@ -204,7 +204,7 @@ pgm_in_len2mask (
 	struct in_addr*		mask
 	)
 {
-	unsigned i;
+	uint8_t i;
 	uint8_t* p;
 
 	p = (uint8_t*)mask;
@@ -240,7 +240,7 @@ pgm_sockaddr_ntop (
 	)
 {
 	return getnameinfo (sa, pgm_sockaddr_len (sa),
-			    host, hostlen,
+			    host, (DWORD) hostlen,
 			    NULL, 0,
 			    NI_NUMERICHOST);
 }

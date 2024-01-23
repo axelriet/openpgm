@@ -669,9 +669,9 @@ pgm_txw_retransmit_try_peek (
  * error C2466: cannot allocate an array of constant size 0
  * error C2133: 'opt_src' : unknown size
  */
-		const pgm_gf8_t		*opt_src[ window->rs.k ];
+		const pgm_gf8_t *opt_src[ window->rs.k ];
 #else
-		pgm_gf8_t               *opt_src = pgm_newa (pgm_gf8_t*, window->rs.k);
+		pgm_gf8_t **opt_src = pgm_newa (pgm_gf8_t*, window->rs.k);
 #endif
 
 		skb->pgm_header->pgm_options |= PGM_OPT_PRESENT;

@@ -234,9 +234,9 @@ main (
 		char s[1024];
 		const size_t slen = strftime (s, sizeof(s), TIME_FORMAT, time_ptr);
 		wchar_t ws[1024];
-		size_t wslen = MultiByteToWideChar (CP_ACP, 0, s, slen, ws, 1024);
+		size_t wslen = MultiByteToWideChar (CP_ACP, 0, s, (int) slen, ws, 1024);
 		char us[1024];
-		size_t uslen = WideCharToMultiByte (CP_UTF8, 0, ws, wslen + 1, us, sizeof(us), NULL, NULL);
+		size_t uslen = WideCharToMultiByte (CP_UTF8, 0, ws, (int) (wslen + 1), us, sizeof(us), NULL, NULL);
 		const int status = pgm_send (sock, us, uslen + 1, NULL);
 #endif
 	        if (PGM_IO_STATUS_NORMAL != status) {

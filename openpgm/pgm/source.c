@@ -1157,8 +1157,8 @@ send_odata (
 							opt_pgmcc_data_len));
 		opt_header = (struct pgm_opt_header*)(opt_len + 1);
 		opt_header->opt_type	= PGM_OPT_PGMCC_DATA | PGM_OPT_END;
-		opt_header->opt_length	= sizeof (struct pgm_opt_header) +
-						opt_pgmcc_data_len;
+		opt_header->opt_length	= (uint8_t) (sizeof (struct pgm_opt_header) +
+						opt_pgmcc_data_len);
 		pgmcc_data  = (struct pgm_opt_pgmcc_data *)(opt_header + 1);
 		pgmcc_data->opt_tstamp = pgm_htonl ((uint32_t)pgm_to_msecs (STATE(skb)->tstamp));
 /* acker nla */
@@ -1333,8 +1333,8 @@ send_odata_copy (
 							opt_pgmcc_data_len));
 		opt_header = (struct pgm_opt_header*)(opt_len + 1);
 		opt_header->opt_type	= PGM_OPT_PGMCC_DATA | PGM_OPT_END;
-		opt_header->opt_length	= sizeof (struct pgm_opt_header) +
-						opt_pgmcc_data_len;
+		opt_header->opt_length	= (uint8_t) (sizeof (struct pgm_opt_header) +
+						opt_pgmcc_data_len);
 		pgmcc_data  = (struct pgm_opt_pgmcc_data *)(opt_header + 1);
 		pgmcc_data->opt_reserved = 0;
 		pgmcc_data->opt_tstamp = pgm_htonl ((uint32_t)pgm_to_msecs (STATE(skb)->tstamp));
@@ -1582,7 +1582,8 @@ retry_send:
 	pgm_txw_set_unfolded_checksum (STATE(skb), STATE(unfolded_odata));
 /* increment socket statistics */
 	if (PGM_LIKELY((size_t)sent == STATE(skb)->len)) {
-		sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += STATE(tsdu_length);
+            sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] +=
+              (uint32_t) STATE (tsdu_length);
 		sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  ++;
 		pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)(tpdu_length + sock->iphdr_len));
 	}
@@ -1769,7 +1770,8 @@ retry_send:
 /* increment socket statistics */
 	pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)bytes_sent);
 	sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  += packets_sent;
-	sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += data_bytes_sent;
+        sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] +=
+          (uint32_t) data_bytes_sent;
 	if (bytes_written)
 		*bytes_written = apdu_length;
 	return PGM_IO_STATUS_NORMAL;
@@ -1779,7 +1781,8 @@ blocked:
 		reset_heartbeat_spm (sock, STATE(skb)->tstamp);
 		pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)bytes_sent);
 		sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  += packets_sent;
-		sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += data_bytes_sent;
+                sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] +=
+                  (uint32_t) data_bytes_sent;
 	}
 	if (PGM_SOCK_ENOBUFS == save_errno)
 		return PGM_IO_STATUS_RATE_LIMITED;
@@ -2180,7 +2183,8 @@ retry_one_apdu_send:
 /* increment socket statistics */
 	pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)bytes_sent);
 	sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  += packets_sent;
-	sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += data_bytes_sent;
+        sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] +=
+          (uint32_t) data_bytes_sent;
 	if (bytes_written)
 		*bytes_written = STATE(apdu_length);
 	pgm_mutex_unlock (&sock->source_mutex);
@@ -2192,7 +2196,8 @@ blocked:
 		reset_heartbeat_spm (sock, STATE(skb)->tstamp);
 		pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)bytes_sent);
 		sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  += packets_sent;
-		sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += data_bytes_sent;
+                sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] +=
+                  (uint32_t) data_bytes_sent;
 	}
 	pgm_mutex_unlock (&sock->source_mutex);
 	pgm_rwlock_reader_unlock (&sock->lock);
@@ -2435,7 +2440,8 @@ retry_send:
 /* increment socket statistics */
 	pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)bytes_sent);
 	sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  += packets_sent;
-	sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += data_bytes_sent;
+        sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] +=
+          (uint32_t) data_bytes_sent;
 	if (bytes_written)
 		*bytes_written = data_bytes_sent;
 	pgm_mutex_unlock (&sock->source_mutex);
@@ -2447,7 +2453,7 @@ blocked:
 		reset_heartbeat_spm (sock, STATE(skb)->tstamp);
 		pgm_atomic_add32 (&sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT], (uint32_t)bytes_sent);
 		sock->cumulative_stats[PGM_PC_SOURCE_DATA_MSGS_SENT]  += packets_sent;
-		sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += data_bytes_sent;
+		sock->cumulative_stats[PGM_PC_SOURCE_DATA_BYTES_SENT] += (uint32_t) data_bytes_sent;
 	}
 	pgm_mutex_unlock (&sock->source_mutex);
 	pgm_rwlock_reader_unlock (&sock->lock);

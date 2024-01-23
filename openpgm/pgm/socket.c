@@ -141,6 +141,7 @@ IsMemberOfAdministratorsGroup (HANDLE hInputToken)
  * check the token we have.
  */
 	osver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	#pragma warning(suppress: 4996)
 	if (!GetVersionEx (&osver))
 		goto CLEANUP;
 
@@ -1563,7 +1564,7 @@ pgm_setsockopt (
  */
 	case PGM_SEND_GROUP:
 	{
-		void*     restrict tmp_optval = optval; 
+        void *restrict tmp_optval = (void* restrict) optval; 
 		socklen_t          tmp_optlen = optlen; 
 
 /* Use OpenPGM enhanced struct with support for multiple IP addresses per interface. */
@@ -1614,7 +1615,7 @@ pgm_setsockopt (
 		if (PGM_UNLIKELY(sock->recv_gsr_len >= IP_MAX_MEMBERSHIPS))
 			break;
 	{
-		void*	  restrict tmp_optval = optval;
+		void*	  restrict tmp_optval = (void* restrict) optval;
 		socklen_t	   tmp_optlen = optlen;
 
 /* Use OpenPGM enhanced struct with support for multiple IP addresses per interface. */

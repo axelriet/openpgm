@@ -1038,7 +1038,7 @@ send_spmr (
 	if (sent < 0 && PGM_LIKELY(PGM_SOCK_EAGAIN == pgm_get_last_sock_error()))
 		return FALSE;
 
-	sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT] += tpdu_length * 2;
+	sock->cumulative_stats[PGM_PC_SOURCE_BYTES_SENT] += (uint32_t) (tpdu_length * 2);
 	return TRUE;
 }
 
