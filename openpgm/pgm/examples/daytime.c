@@ -110,6 +110,9 @@ usage (
 }
 
 int
+#ifdef _MSC_VER
+__cdecl
+#endif
 main (
 	int	argc,
 	char   *argv[]

@@ -26,6 +26,9 @@
 #include <time.h>
 
 int
+#ifdef _MSC_VER
+__cdecl
+#endif
 main(int argc, char* argv[])
 {
 	char build_date[1024], build_time[1024];
